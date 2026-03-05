@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // SECURITY CHECK: If not logged in, boot to index
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <button class="logout-btn" onclick="localStorage.removeItem('isLoggedIn'); window.location.href='index.html'">LOGOUT</button>
+
+    <div class="board">
+        <div class="column">
+            <div class="column-header">To Do</div>
+            <div class="list" id="todo-list"></div>
+            <div class="input-area">
+                <input type="text" id="taskInput" placeholder="+ Add a card..." onkeypress="handleKeyPress(event)">
+                <button onclick="createNewTask()">Add Card</button>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="column-header">In Progress</div>
+            <div class="list" id="progress-list"></div>
+        </div>
+
+        <div class="column">
+            <div class="column-header">Completed</div>
+            <div class="list" id="done-list"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trello Clone - Meme Edition</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        // SECURITY CHECK: If not logged in, boot to index
+        if (localStorage.getItem('isLoggedIn') !== 'true') {
+            window.location.href = 'index.html';
+        }
+    </script>
+</head>
+<body>
+
+    <button class="logout-btn" onclick="localStorage.removeItem('isLoggedIn'); window.location.href='index.html'">LOGOUT</button>
+
+    
+    <script src="script.js"></script>
+</body>
+</html>

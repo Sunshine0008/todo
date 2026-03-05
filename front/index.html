@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meme-Board Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-overlay">
+        <div class="login-box" id="login-form">
+            <h2>STOP RIGHT THERE!</h2>
+            <p>ANOTHER TASK THATS NEEDS TRACKING</p>
+            <form onsubmit="handleLogin(event)">
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <button type="submit">Let Me In!!!</button>
+            </form>
+            <p class="toggle-text">New here? <span onclick="toggleAuth()">Create an account</span></p>
+        </div>
+
+        <div class="login-box hidden" id="signup-form">
+            <h2>Join the Chaos</h2>
+            <p>Choose your meme identity</p>
+            <form onsubmit="handleSignUp(event)">
+                <input type="text" placeholder="Username" required>
+                <input type="email" id="signupEmail" placeholder="Email" required>
+                <input type="password" id="signupPassword" placeholder="Create Password" required>
+                <button type="submit" style="background-color: #39ff14; color: black;">Sign Me Up!</button>
+            </form>
+            <p class="toggle-text">Already a member? <span onclick="toggleAuth()">Go to Login</span></p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:5000";
+
+function toggleAuth() {
+    document.getElementById('login-form').classList.toggle('hidden');
+    document.getElementById('signup-form').classList.toggle('hidden');
+}
+
+async function handleSignUp(event) {
+    event.preventDefault();
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
+
+    const res = await fetch(`${API_BASE}/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+
+    if (res.ok) {
+        alert("ACCOUNT CREATED! Now log in.");
+        toggleAuth();
+    } else {
+        alert("Email already taken or server is down.");
+    }
+}
+
+async function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const res = await fetch(`${API_BASE}/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    });
+
+    if (res.ok) {
+        const data = await res.json();
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userId', data.user_id); // This is vital for script.js
+        window.location.href = 'to-do.html';
+    } else {
+        alert("WRONG! Try again.");
+    }
+}
+    </script>
+</body>
+</html>
